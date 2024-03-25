@@ -30,7 +30,6 @@ class DFA:
 
     @staticmethod
     def deserialize_json(json_str: str) -> 'DFA':
-        # Implementation for deserializing DFA from JSON
         fa = DFA()
         json_fa = json.loads(json_str)
 
@@ -52,8 +51,19 @@ class DFA:
         return fa
 
     def serialize_json(self) -> str:
-        # Implementation for serializing DFA to JSON
-        ...
+        fa = {
+            "states": list(map(lambda s: f"q_{s.id}", self.states)),
+            "initial_state": f"q_{self.init_state.id}",
+            "final_states": list(map(lambda s: f"q_{s.id}", self.final_states)),
+            "alphabet": self.alphabet
+        }
+
+        for state in self.states:
+            fa[f"q_{state.id}"] = {}
+            for symbol in self.alphabet:
+                fa[f"q_{state.id}"][symbol] = f"q_{state.transitions[symbol].id}"
+
+        return json.dumps(fa)
 
     def add_state(self, id: int | None = None) -> State:
         ...
@@ -84,7 +94,7 @@ class NFA:
         ...
 
     @staticmethod
-    def convertDFAinstanseToNFAinstanse(dfa_machine: 'DFA') -> 'NFA':
+    def convert_DFA_instanse_to_NFA_instanse(dfa_machine: 'DFA') -> 'NFA':
         ...
     
     @staticmethod
@@ -96,5 +106,8 @@ class NFA:
         ...
     
     @staticmethod
-    def star(self) -> 'NFA':
+    def star(machine: 'NFA') -> 'NFA':
+        ...
+
+    def serialize_to_json(self) -> str:
         ...
