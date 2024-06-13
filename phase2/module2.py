@@ -11,21 +11,21 @@ def chack_address(address: str, fa: DFA):
         curr = curr.transitions[c]
     return fa.is_final(curr)
 
-def solve(json_str: str, image: imageType) -> bool:
-    fa = DFA.deserialize_json(json_str)
+
+def solve_percentage(fa: DFA, image: imageType) -> float:
     address = convert_into_bit_address(image)
-    res = True
     match = 0
     for add in address:
-        res1 = chack_address(add, fa)
-        if res1:
+        if chack_address(add, fa):
             match += 1
-        res = res and res1
-    print(str(match * 100 / len(address)) + "%")
-    return res
+    return match / len(address)
 
 
-
+def solve(json_str: str, image: imageType) -> bool:
+    fa = DFA.deserialize_json(json_str)
+    res = solve_percentage(fa, image)
+    print(str(res * 100) + "%")
+    return res == 1
 
 
 if __name__ == "__main__":
