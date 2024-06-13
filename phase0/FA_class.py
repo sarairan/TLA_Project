@@ -36,7 +36,7 @@ class DFA:
         fa.alphabet = json_fa["alphabet"]
 
         for state_str in json_fa["states"]:
-            fa.add_state(int(state_str[2:]))
+            fa.add_state(state_str[2:])
 
         fa.init_state = fa.get_state_by_id(json_fa["initial_state"][2:])
 

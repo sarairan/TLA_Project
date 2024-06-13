@@ -2,26 +2,26 @@ from phase0.FA_class import DFA
 from utils.utils import imageType
 
 
-def split_into_fourths(image):
+def split_into_fourths(image: imageType) -> list[imageType] | None:
     height = len(image)
     width = len(image[0])
 
     part_height = height // 2
     part_width = width // 2
 
-    part1 = []
-    part2 = []
-    part3 = []
-    part4 = []
+    part1: imageType = []
+    part2: imageType = []
+    part3: imageType = []
+    part4: imageType = []
 
     if part_height <= 0 and part_width <= 0:
         return None
 
     for i in range(height):
-        part11 = []
-        part21 = []
-        part31 = []
-        part41 = []
+        part11 = list[int]()
+        part21 = list[int]()
+        part31 = list[int]()
+        part41 = list[int]()
         for j in range(width):
             if i < part_height and j < part_width:
                 part11.append(image[i][j])
@@ -41,6 +41,18 @@ def split_into_fourths(image):
             part4.append(part41)
 
     return [part1, part2, part3, part4]
+
+
+def convert_into_bit_address(image: imageType, prefix: str = ""):
+    res = list[str]()
+    if image == None or len(image) == 0:
+        return res
+    if len(image) == 1 and len(image[0]) == 1:
+        return [prefix] if image[0][0] == 1 else res
+    parts = split_into_fourths(image)
+    for i in range(4):
+        res += convert_into_bit_address(parts[i], prefix + str(i))
+    return res
 
 
 def solve(image: imageType) -> 'DFA':

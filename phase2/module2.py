@@ -1,11 +1,31 @@
 from phase0.FA_class import DFA
+from phase0.FA_class import State
+from phase1.module1 import convert_into_bit_address
 from utils import utils
 from utils.utils import imageType
 
 
+def chack_address(address: str, fa: DFA):
+    curr: State = fa.init_state
+    for c in address:
+        curr = curr.transitions[c]
+    return fa.is_final(curr)
+
 def solve(json_str: str, image: imageType) -> bool:
     fa = DFA.deserialize_json(json_str)
-    ...
+    address = convert_into_bit_address(image)
+    res = True
+    match = 0
+    for add in address:
+        res1 = chack_address(add, fa)
+        if res1:
+            match += 1
+        res = res and res1
+    print(str(match * 100 / len(address)) + "%")
+    return res
+
+
+
 
 
 if __name__ == "__main__":
