@@ -3,6 +3,7 @@ import numpy as np
 
 
 imageType = list[list[int]]
+imageIndexType = list[list[tuple[int, int]]]
 
 
 def convert_pictures_to_gray_scale_and_binary_array(path: str, res: int = 512) -> list[list[int]]:
