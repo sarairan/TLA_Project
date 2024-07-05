@@ -94,7 +94,7 @@ def solve(image: imageType) -> 'DFA':
 
 
 if __name__ == "__main__":
-    import utils
+    import utils.utils as utils
 
     image = [[1, 1, 1, 1],
              [1, 0, 1, 0],
